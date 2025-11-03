@@ -14,7 +14,7 @@ class Bookings(models.Model):
         related_name='bookings'
     )
     court = models.ForeignKey(
-        'courts.Courts',
+        'courts.Court',
         db_column='CourtId',
         on_delete=models.DO_NOTHING,
         related_name='bookings'

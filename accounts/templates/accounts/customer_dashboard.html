@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Trang khách hàng</title>
+</head>
+<body>
+  <h1>Xin chào, {{ user.username }}</h1>
+  <p>Chào mừng bạn đến dashboard của khách hàng!</p>
+  <a href="{% url 'accounts:logout' %}">Đăng xuất</a>
+</body>
+</html>
