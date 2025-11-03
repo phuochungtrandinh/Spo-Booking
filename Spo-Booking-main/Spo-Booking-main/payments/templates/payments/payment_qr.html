@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán QR</title>
+    <style>
+        :root {
+            --bg: #0f1412;
+            --panel: #121a16;
+            --panel-2: #0f1713;
+            --stroke: rgba(255,255,255,.06);
+            --muted: rgba(230,255,243,.72);
+            --text: #e7fff3;
+            --accent: #11a85a;
+            --accent-dark: #0b7e46;
+            --accent-weak: #163a2a;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+            background: radial-gradient(1200px 600px at 50% -20%, #143c2b55, transparent 60%) , var(--bg);
+            color: var(--text);
+        }
+        .wrap { max-width: 1040px; margin: 28px auto; padding: 0 16px; }
+        .title {
+            background: linear-gradient(90deg, var(--accent), #2cd07b);
+            color: #07140e;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 800;
+            letter-spacing: .2px;
+            width: fit-content;
+            box-shadow: 0 10px 30px #11a85a33;
+        }
+        .grid {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 16px;
+        }
+        .card {
+            background: linear-gradient(180deg, var(--panel), var(--panel-2));
+            border: 1px solid var(--stroke);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 10px 30px #00000055, inset 0 1px 0 rgba(255,255,255,.04);
+        }
+        .section-h {
+            font-weight: 700; font-size: 14px; color: var(--muted); margin-bottom: 10px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .amount {
+            font-size: 36px; font-weight: 900; color: #b7ffd9; margin: 6px 0 14px;
+            text-shadow: 0 4px 24px #0f4d3150;
+        }
+        .meta { color: #bde7d1; opacity: .75; font-size: 14px; }
+        .btns { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+        .btn {
+            background: var(--accent);
+            color: #062015; border: 1px solid #1eea7d44; padding: 10px 14px; border-radius: 10px; cursor: pointer;
+            font-weight: 700; box-shadow: 0 6px 18px #11a85a38; transition: .15s ease-in-out;
+        }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 22px #11a85a48; }
+        .btn.secondary { background: transparent; color: #c7ffea; border-color: #2a644b; }
+        .qr {
+            background: #0e1411; border-radius: 14px; border: 1px dashed #2a644b; padding: 16px;
+            display: grid; place-items: center;
+        }
+        .qr img { width: 300px; max-width: 100%; display: block; border-radius: 8px; }
+        .hint { color: #bde7d1; opacity: .75; font-size: 13px; margin-top: 10px; }
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+    <script>
+        function copyAmount() {
+            var el = document.getElementById('amountRaw');
+            navigator.clipboard.writeText(el.textContent);
+            var btn = document.getElementById('copyBtn');
+            btn.textContent = 'Đã copy';
+            setTimeout(function(){ btn.textContent = 'Copy số tiền'; }, 1200);
+        }
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="title">Thanh toán đặt sân</div>
+
+        <div class="grid">
+            <section class="card">
+                <div class="section-h">Thông tin đơn</div>
+                <div>Mã đặt chỗ: <strong>#{{ booking.id }}</strong></div>
+                <div class="meta" style="margin-top:6px;">Thời gian: {{ booking.start_time }} → {{ booking.end_time }}</div>
+                <div class="section-h" style="margin-top:16px;">Số tiền cần thanh toán</div>
+                <div class="amount">{{ total_amount|floatformat:0 }} VND</div>
+                <div id="amountRaw" style="display:none;">{{ total_amount }}</div>
+                <div class="btns">
+                    <button id="copyBtn" class="btn" onclick="copyAmount()">Copy số tiền</button>
+                    <a class="btn secondary" href="/booking/customer/">Quay lại đặt sân</a>
+                </div>
+                <p class="hint">Sau khi chuyển khoản, vui lòng giữ biên lai. Quản trị viên sẽ xác nhận giao dịch và cập nhật trạng thái đặt chỗ.</p>
+            </section>
+
+            <section class="card">
+                <div class="section-h">Quét mã QR để thanh toán</div>
+                <div class="qr">
+                    <img src="{% static 'payments/Banking_QR.jpg' %}" alt="QR chuyển khoản">
+                </div>
+                <p class="hint">Dùng ứng dụng ngân hàng/VietQR để quét. Nội dung chuyển khoản: <strong>BOOK-{{ booking.id }}</strong>.</p>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
+
+
