@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="form-container">
+    <h3>Sửa thông tin sân</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Tên sân</label>
+        <input type="text" name="name" value="{{ court.name }}" required>
+
+        <label>Giá theo giờ</label>
+        <input type="number" name="price" value="{{ court.price_per_hour }}" required>
+
+        <label>Tình trạng</label>
+        <select name="status">
+            <option value="active" {% if court.status == 'active' %}selected{% endif %}>Đang hoạt động</option>
+            <option value="inactive" {% if court.status == 'inactive' %}selected{% endif %}>Tạm dừng</option>
+        </select>
+
+        <div class="btn-group">
+            <a href="{% url 'list_courts' %}" class="cancel-btn">Hủy</a>
+            <button type="submit" class="save-btn">Lưu thay đổi</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
