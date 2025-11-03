@@ -1,0 +1,81 @@
+/* basic reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #f1fff9;
+  color: #123;
+}
+
+/* navbar */
+.navbar { background: #fff; border-bottom: 1px solid rgba(0,0,0,0.04); }
+.navbar .container { display:flex; justify-content:space-between; align-items:center; padding:14px 60px; }
+.logo { display:flex; align-items:center; gap:12px; }
+.logo img { width:48px; height:48px; object-fit:cover; border-radius:6px; }
+.brand { font-weight:700; color:#0b3b30; }
+
+.nav-actions { display:flex; gap:14px; align-items:center; }
+.link.login { color:#0b3b30; text-decoration:none; padding:6px 10px; }
+.btn.signup { background:#0ea77f; color:#fff; padding:8px 14px; border-radius:10px; text-decoration:none; }
+
+/* hero */
+.hero { display:flex; align-items:center; gap:40px; padding:60px; max-width:1200px; margin:24px auto; }
+.hero-left { flex:1; }
+.hero-right { flex:1; display:flex; justify-content:center; }
+.hero-right img { width:100%; max-width:560px; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.06); }
+
+h1 { font-size: 40px; line-height:1.05; color:#0b2a27; margin-bottom:18px; }
+.highlight { color:#00b081; }
+.lead { color:#466; margin-bottom:22px; }
+
+/* buttons */
+.btn { display:inline-block; text-decoration:none; border-radius:8px; padding:10px 18px; }
+.primary { background:#00b081; color:white; }
+.outline { background:transparent; border:2px solid #00b081; color:#00b081; }
+
+/* responsive */
+@media (max-width: 900px) {
+  .hero { flex-direction:column; padding:30px; }
+  .navbar .container { padding:12px 20px; }
+  .hero-right img { max-width:100%; }
+}
+
+/* --- Hero text adjustments --- */
+h1 {
+  font-size: 52px;            /* 🔥 tăng kích thước tiêu đề */
+  line-height: 1.1;
+  color: #0b2a27;
+  margin-bottom: 20px;
+}
+
+.lead {
+  font-size: 20px;            /* 🔥 tăng kích thước mô tả */
+  color: #466;
+  margin-bottom: 26px;
+}
+
+/* --- Stats section (fix layout) --- */
+.stats {
+  display: flex;               /* giúp các phần nằm ngang */
+  justify-content: flex-start; /* canh bên trái */
+  align-items: center;
+  gap: 60px;                   /* khoảng cách giữa các phần */
+  margin-top: 40px;
+}
+
+.stat {
+  text-align: center;            /* căn chữ gọn gàng */
+}
+
+.stat h3 {
+  font-size: 30px;
+  color: #00b081;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.stat p {
+  color: #244;
+  font-weight: 500;
+}
+

@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SPO Booking - Trang chủ</title>
+  <link rel="stylesheet" href="{% static 'home/style.css' %}">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">
+        <img src="{% static 'home/logo.png' %}" alt="SPO Booking Logo">
+        <span class="brand">SPO BOOKING</span>
+      </div>
+
+
+    </div>
+  </nav>
+
+  <main class="hero">
+    <div class="hero-left">
+      <h1>Đặt sân cầu lông <span class="highlight">dễ dàng</span>, chơi thoải mái</h1>
+      <p class="lead">Hệ thống 3 sân cầu lông chất lượng cao với đầy đủ tiện nghi. Đặt online nhanh chóng, tiện lợi 24/7.</p>
+
+      <div class="hero-cta">
+        <a href="{% url 'bookings:customer_booking' %}" class="btn primary">Khám phá ngay</a>
+        <a href="#" class="btn outline">Xem video</a>
+      </div>
+        <!-- Thống kê -->
+<div class="stats">
+  <div class="stat">
+    <h3>3</h3>
+    <p>Sân cầu lông</p>
+  </div>
+  <div class="stat">
+    <h3>2K+</h3>
+    <p>Lượt đặt</p>
+  </div>
+  <div class="stat">
+    <h3>4.9 ⭐</h3>
+    <p>Đánh giá</p>
+  </div>
+</div>
+
+    </div>
+
+    <div class="hero-right">
+      <img src="{% static 'home/badminton_court.jpg' %}" alt="Sân cầu lông">
+    </div>
+  </main>
+</body>
+</html>
