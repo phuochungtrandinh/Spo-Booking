@@ -18,7 +18,7 @@
             </div>
 
             <nav class="menu">
-                <a href="#" class="menu-item">
+                <a href="{% url 'bookings:admin_booking_list' %}" class="menu-item">
                     <i class="fa-regular fa-calendar"></i>
                     <span>Quản lí đặt lịch</span>
                 </a>
@@ -33,11 +33,7 @@
                 <a href="#" class="menu-item">
                     <i class="fa-regular fa-comment"></i>
                     <span>Quản lí đánh giá và phản hồi</span>
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fa-solid fa-comments"></i>
-                    <span>Quản lí chat</span>
-                </a>
+                
             </nav>
 
             <a href="{% url 'logout' %}" class="logout-btn">
