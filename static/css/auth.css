@@ -1,0 +1,161 @@
+/* auth.css - style cho login/register */
+:root{
+  --green-1: #0ea45b;
+  --green-2: #159a62;
+  --dark-green: #2f6b52;
+  --card-radius: 12px;
+  --shadow: 0 20px 40px rgba(17, 60, 36, 0.18);
+  --input-radius: 8px;
+  --muted: #6b6b6b;
+}
+
+/* toàn trang - gradient nền */
+html,body{
+  height:100%;
+  margin:0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(180deg, #2b8f61 0%, #12b06b 50%, #0ea45b 100%);
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  color:#0e2f1f;
+}
+
+/* header bar trên cùng (logo + title) */
+.header-bar{
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:72px;
+  display:flex;
+  align-items:center;
+  padding:0 28px;
+  background: rgba(0,0,0,0.08);
+  z-index:5;
+  box-shadow: none;
+}
+.header-logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo-circle{
+  width:36px;
+  height:36px;
+  background:rgba(255,255,255,0.14);
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+}
+.header-title{
+  font-weight:700;
+  color:#0f3f2a;
+  letter-spacing:0.5px;
+  font-size:18px;
+}
+
+/* container chính chứa card */
+.container-auth{
+  width:100%;
+  max-width:420px;
+  margin-top:110px; /* đẩy xuống dưới header */
+  padding:28px;
+  display:flex;
+  justify-content:center;
+}
+
+/* card trắng */
+.auth-card{
+  width:100%;
+  background: #ffffff;
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow);
+  padding:28px 28px 18px 28px;
+  text-align:center;
+}
+
+/* tiêu đề */
+.auth-card h2{
+  margin:0 0 18px 0;
+  font-size:20px;
+  color:#0b3d2b;
+}
+
+/* form */
+.auth-form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:6px;
+}
+
+/* input style */
+.input-row{
+  text-align:left;
+}
+.input-row label{
+  display:block;
+  font-size:12px;
+  margin-bottom:6px;
+  color:var(--muted);
+}
+.input-row input{
+  width:100%;
+  padding:10px 12px;
+  border-radius: var(--input-radius);
+  border:1px solid rgba(0,0,0,0.08);
+  box-sizing:border-box;
+  font-size:14px;
+  outline:none;
+}
+.input-row input:focus{
+  border-color: rgba(12,90,46,0.8);
+  box-shadow: 0 4px 12px rgba(5,80,40,0.08);
+}
+
+/* nút chính */
+.btn-primary{
+  margin-top:8px;
+  width:100%;
+  padding:11px 14px;
+  border-radius:10px;
+  border:none;
+  background: linear-gradient(180deg,var(--green-1), var(--green-2));
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+  font-size:15px;
+  box-shadow: 0 6px 12px rgba(10,80,40,0.14);
+}
+
+/* phần link nhỏ phía dưới card */
+.card-footer{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid rgba(0,0,0,0.04);
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  font-size:13px;
+  opacity:0.95;
+}
+
+/* link quên mk hiển thị nhưng không cần hoạt động */
+.link-muted{
+  display:block;
+  text-align:center;
+  margin-top:6px;
+  color:#2b6b4e;
+  font-size:13px;
+  text-decoration:none;
+}
+
+/* responsive */
+@media (max-width:480px){
+  .container-auth{ padding:18px; margin-top:90px; }
+  .auth-card{ padding:20px; }
+}

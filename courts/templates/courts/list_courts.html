@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2>Quản lí sân</h2>
+    <a href="{% url 'add_court' %}" class="add-btn">➕ Thêm sân</a>
+    <table class="court-table">
+        <thead>
+            <tr>
+                <th>Tên sân</th>
+                <th>Giá theo giờ</th>
+                <th>Tình trạng</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for court in courts %}
+            <tr>
+                <td>{{ court.name }}</td>
+                <td>{{ court.price_per_hour }}đ</td>
+                <td>
+                    {% if court.status == 'active' %}
+                        <span class="status-active">Đang hoạt động</span>
+                    {% else %}
+                        <span class="status-inactive">Tạm dừng</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'edit_court' court.id %}" class="edit-btn">✏️</a>
+                    <a href="{% url 'delete_court' court.id %}" class="delete-btn" onclick="return confirm('Bạn có chắc muốn xóa sân này?')">🗑️</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
