@@ -53,9 +53,3 @@ def logout_view(request):
     messages.info(request, "Đăng xuất thành công.")
     return redirect('accounts:login')
 
-
-@login_required
-def dashboard_view(request):
-    if request.user.is_staff or request.user.is_superuser:
-        return redirect('/admin/')
-    return render(request, 'home/home.html', {'user': request.user})
