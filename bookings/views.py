@@ -9,6 +9,11 @@ from django.contrib import messages
 from .models import Bookings
 from courts.models import Court
 
+from accounts.models import Users
+from django.shortcuts import render
+
+def admin_booking_list(request):
+    return render(request, 'bookings/admin_booking_list.html')
 
 @staff_member_required  # chỉ admin hoặc staff có thể truy cập
 def admin_booking_list(request):

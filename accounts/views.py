@@ -58,4 +58,4 @@ def logout_view(request):
 def dashboard_view(request):
     if request.user.is_staff or request.user.is_superuser:
         return redirect('/admin/')
-    return render(request, 'accounts/customer_dashboard.html', {'user': request.user})
+    return render(request, 'home/home.html', {'user': request.user})
