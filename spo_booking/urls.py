@@ -26,7 +26,6 @@ urlpatterns = [
     path('booking/', include('bookings.urls')),
     path('', include('home.urls')),
     path('accounts/', include('accounts.urls')),
-    path('courts/', include('courts.urls')),
     path('accounts/logout/', auth_views.LogoutView.as_view(next_page='/accounts/login/'), name='logout'),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
 ]

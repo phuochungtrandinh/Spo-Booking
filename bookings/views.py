@@ -12,13 +12,6 @@ from courts.models import Court
 from accounts.models import Users
 from django.shortcuts import render
 
-def admin_booking_list(request):
-    return render(request, 'bookings/admin_booking_list.html')
-
-@staff_member_required  # chỉ admin hoặc staff có thể truy cập
-def admin_booking_list(request):
-    bookings = Bookings.objects.all().order_by('-start_time', '-end_time')
-    return render(request, 'bookings/admin_booking_list.html', {'bookings': bookings})
 
 @login_required
 def customer_booking(request):
