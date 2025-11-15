@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from bookings.models import Bookings
+from django.db.models import Q
 
 def register_view(request):
     if request.method == 'POST':
@@ -53,3 +55,53 @@ def logout_view(request):
     messages.info(request, "Đăng xuất thành công.")
     return redirect('accounts:login')
 
+
+@login_required
+def profile_view(request):
+    user = request.user
+
+    # Lay lich su dat san
+    bookings = Bookings.objects.filter(user=user).select_related('court').order_by('-start_time')
+
+    # Xu ly cap nhat thong tin
+    if request.method == 'POST':
+        action = request.POST.get('action')
+
+        if action == 'update_info':
+            email = request.POST.get('email', '').strip()
+            phone = request.POST.get('phone', '').strip()
+            full_name = request.POST.get('full_name', '').strip()
+
+            # Kiem tra email trung
+            if email and User.objects.filter(email=email).exclude(id=user.id).exists():
+                messages.error(request, 'Email da duoc su dung boi tai khoan khac.')
+            else:
+                user.email = email
+                user.first_name = full_name
+                user.save()
+                messages.success(request, 'Cap nhat thong tin thanh cong.')
+                return redirect('accounts:profile')
+
+        elif action == 'change_password':
+            old_password = request.POST.get('old_password', '')
+            new_password = request.POST.get('new_password', '')
+            confirm_password = request.POST.get('confirm_password', '')
+
+            if not user.check_password(old_password):
+                messages.error(request, 'Mat khau cu khong dung.')
+            elif new_password != confirm_password:
+                messages.error(request, 'Mat khau moi khong khop.')
+            elif len(new_password) < 6:
+                messages.error(request, 'Mat khau phai co it nhat 6 ky tu.')
+            else:
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Doi mat khau thanh cong.')
+                return redirect('accounts:profile')
+
+    context = {
+        'user': user,
+        'bookings': bookings,
+    }
+    return render(request, 'accounts/profile.html', context)
