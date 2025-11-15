@@ -13,3 +13,9 @@ class Court(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Quản lý sân"
+        verbose_name_plural = "Quản lý sân"
+        managed = True
+        db_table = 'Courts'

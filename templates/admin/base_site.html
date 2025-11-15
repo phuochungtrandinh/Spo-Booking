@@ -1,0 +1,22 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{# Tiêu đề tab trình duyệt #}
+{% block title %}SPO Booking - Trang quản trị{% endblock %}
+
+{# Nhúng CSS custom cho admin #}
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/admin_custom.css' %}">
+{% endblock %}
+
+{# Logo + tên site ở góc trên trái #}
+{% block branding %}
+<div id="branding" class="spo-branding">
+    <img src="{% static 'home/logo.png' %}" alt="SPO Booking" class="spo-logo-img">
+    <span class="spo-logo-text">SPO BOOKING</span>
+</div>
+{% endblock %}
+
+{# Giữ nguyên menu mặc định của Django #}
+{% block nav-global %}{{ block.super }}{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'admin_custom.css' %}">
+{% endblock %}
+
+{% block content_title %}
+<h1 class="title-custom">Quản lý khách hàng</h1>
+{% endblock %}
+
+{% block search %}
+<div class="search-wrapper">
+    <form method="get">
+        <input type="text" name="q" class="search-input" placeholder="Tìm kiếm theo tên, email hoặc số điện thoại..." value="{{ request.GET.q }}">
+        <button class="search-btn">Tìm kiếm</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block result_list %}
+<table class="customer-table">
+    <thead>
+        <tr>
+            <th>Khách hàng</th>
+            <th>Liên hệ</th>
+            <th>Số lần đặt</th>
+            <th>Lần đặt cuối</th>
+            <th>Trạng thái</th>
+            <th style="text-align:center;">Thao tác</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for user in cl.result_list %}
+        <tr>
+            <td class="user-cell">
+                <div class="avatar">{{ user.first_name|first|upper }}</div>
+                <div class="user-info">
+                    <strong>{{ user.get_full_name }}</strong>
+                </div>
+            </td>
+
+            <td class="contact-cell">
+                <div class="email">{{ user.email }}</div>
+                <div class="phone">{{ user.phone_number }}</div>
+            </td>
+
+            <td class="count-cell">
+                <span class="count">{{ user.total_bookings }} lần</span>
+            </td>
+
+            <td>
+                <span class="date">{{ user.last_booking }}</span>
+            </td>
+
+            <td>
+                {% if user.is_active %}
+                <span class="badge active">Đang hoạt động</span>
+                {% else %}
+                <span class="badge inactive">Không hoạt động</span>
+                {% endif %}
+            </td>
+
+            <td class="action-cell">
+                <a href="{{ user.id }}/change/" class="edit-btn">✏️</a>
+                <a href="{{ user.id }}/delete/" class="delete-btn">🗑</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

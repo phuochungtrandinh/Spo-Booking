@@ -13,10 +13,11 @@ class Users(models.Model):
     updated_at = models.DateTimeField(db_column='UpdatedAt', blank=True, null=True)
 
     class Meta:
-        verbose_name = "Accounts"
-        verbose_name_plural = "Accounts"
+        verbose_name = "Quản lý khách hàng"
+        verbose_name_plural = "Quản lý khách hàng"
         managed = True
         db_table = 'Accounts'
 
     def __str__(self):
         return self.full_name or self.email or self.phone or f'User #{self.id}'
+

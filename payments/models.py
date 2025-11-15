@@ -24,8 +24,8 @@ class Payments(models.Model):
     created_at = models.DateTimeField(db_column='CreatedAt', blank=True, null=True)
 
     class Meta:
-        verbose_name = "Payments"
-        verbose_name_plural = "Payments"
+        verbose_name = "Quản lý thanh toán"
+        verbose_name_plural = "Quản lý thanh toán"
         managed = True
         db_table = 'Payments'
         indexes = [

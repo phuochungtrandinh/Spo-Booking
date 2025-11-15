@@ -24,8 +24,8 @@ class Bookings(models.Model):
     created_at = models.DateTimeField(db_column='CreatedAt', blank=True, null=True)
 
     class Meta:
-        verbose_name = "Bookings"
-        verbose_name_plural = "Bookings"
+        verbose_name = "Quản lý đặt lịch"
+        verbose_name_plural = "Quản lý đặt lịch"
         managed = True
         db_table = 'Bookings'
         indexes = [
