@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin cá nhân - SPO Booking</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="{% url 'home_page' %}">
+                    <img src="{% static 'home/logo.png' %}" alt="SPO Booking Logo">
+                    <span class="brand">SPO BOOKING</span>
+                </a>
+            </div>
+            <div class="user-menu">
+                <div class="dropdown">
+                    <img src="{% static 'images/avatar-default.png' %}" alt="avatar" class="avatar" id="avatarIcon">
+                    <div class="dropdown-content" id="userDropdown">
+                        <a href="{% url 'accounts:profile' %}">Thông tin cá nhân</a>
+                        <a href="{% url 'accounts:logout' %}">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <div class="left-section">
+            <div class="info-card">
+                <h2>Thông tin tài khoản</h2>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST" class="info-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_info">
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="{{ user.email }}" placeholder="user@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Username</label>
+                        <input type="text" id="phone" name="phone" value="{{ user.username }}" placeholder="username" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="full_name">Họ tên</label>
+                        <input type="text" id="full_name" name="full_name" value="{{ user.first_name }}" placeholder="Trần Văn A">
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">Chỉnh sửa</button>
+                        <button type="button" class="btn-secondary" onclick="showPasswordModal()">Đổi mật khẩu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="history-card">
+                <div class="history-header">
+                    <h2>Lịch sử đặt sân</h2>
+                    <select id="filterDays" class="filter-select">
+                        <option value="7">7 ngày qua</option>
+                        <option value="30">30 ngày qua</option>
+                        <option value="90">90 ngày qua</option>
+                    </select>
+                </div>
+
+                <div class="booking-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ngày/Giờ</th>
+                                <th>Sân</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in bookings %}
+                            <tr>
+                                <td>
+                                    <div class="datetime">
+                                        {{ booking.start_time|date:"d/m/Y" }}<br>
+                                        {{ booking.start_time|date:"H:i" }} - {{ booking.end_time|date:"H:i" }}
+                                    </div>
+                                </td>
+                                <td>{{ booking.court.name }}</td>
+                                <td>
+                                    {% if booking.status == 'CONFIRMED' %}
+                                        <span class="status-badge status-confirmed">Đã chơi</span>
+                                    {% elif booking.status == 'CANCELLED' %}
+                                        <span class="status-badge status-cancelled">Đã hủy</span>
+                                    {% else %}
+                                        <span class="status-badge status-booked">Đã đặt</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="no-data">Chưa có lịch sử đặt sân</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <h2>Lịch sử đánh giá</h2>
+                    <select class="filter-select">
+                        <option value="7">7 ngày qua</option>
+                        <option value="30">30 ngày qua</option>
+                    </select>
+                </div>
+
+                <div class="review-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ngày/Giờ</th>
+                                <th>Sân</th>
+                                <th>Điểm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="datetime">
+                                        20/10/2025<br>
+                                        7:00 - 9:00
+                                    </div>
+                                </td>
+                                <td>Sân 1</td>
+                                <td>
+                                    <div class="stars">
+                                        <span class="star filled">&#9733;</span>
+                                        <span class="star filled">&#9733;</span>
+                                        <span class="star filled">&#9733;</span>
+                                        <span class="star filled">&#9733;</span>
+                                        <span class="star">&#9733;</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePasswordModal()">&times;</span>
+            <h2>Đổi mật khẩu</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="change_password">
+
+                <div class="form-group">
+                    <label for="old_password">Mật khẩu cũ</label>
+                    <input type="password" id="old_password" name="old_password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="new_password">Mật khẩu mới</label>
+                    <input type="password" id="new_password" name="new_password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Xác nhận mật khẩu mới</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="button" class="btn-secondary" onclick="closePasswordModal()">Hủy</button>
+                    <button type="submit" class="btn-primary">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const avatarIcon = document.getElementById('avatarIcon');
+        const userDropdown = document.getElementById('userDropdown');
+
+        avatarIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!avatarIcon.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
+
+        function showPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'block';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('passwordModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
+

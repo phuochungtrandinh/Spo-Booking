@@ -21,7 +21,7 @@
           <div class="dropdown">
     <img src="{% static 'images/avatar-default.png' %}" alt="avatar" class="avatar" id="avatarIcon">
     <div class="dropdown-content" id="userDropdown">
-      <a>Thông tin cá nhân</a>
+      <a href="{% url 'accounts:profile' %}">Thông tin cá nhân</a>
       <a href="{% url 'accounts:logout' %}">Đăng xuất</a>
     </div>
   </div>
